@@ -1,0 +1,278 @@
+// Bootstrap Compass and site-wide variables
+@import "components/typography";
+@import "components/sass-foundation";
+
+// VARIABLES //
+$padding: 30px;
+$padding-rem: rem(20);
+$padding-roomy: 40px;
+$padding-roomy-rem: rem($padding-roomy);
+$heading-one-size: 40px;
+$heading-two-size: 32px;
+$heading-three-size: 24px;
+$heading-four-size: 18px;
+$heading-five-size: 14px;
+$two-col-left-width: 200px;
+$two-col-right-width: $content-width - $two-col-left-width;
+$default-line-height: 1.5em;
+
+// Media breakpoints
+// Variables in media queries not supported in PySCSS as of 7/1/13.
+// 1010px;
+// 770px;
+
+// SUPER GENERIC STYLES //
+
+%content * {
+	-webkit-box-sizing: border-box; // for Android ≤ 2.3, iOS ≤ 4  
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+// MODULES //
+
+// Page structure
+%structural-element {
+	height: 100%;
+}
+
+%roomy {
+	padding: rem($padding * 2) 10px;
+}
+
+%hero-wrap {
+	width: 100%;
+	position: relative;
+}
+
+%content-wrap-base {
+	max-width: $content-width; //_variables.scss
+	margin: 0 auto;
+	position: relative;
+}
+
+%content-wrap {
+	@extend %content-wrap-base;
+	padding: $padding 0;
+}
+
+%content-wrap-roomy {
+	@extend %content-wrap-base;
+	@extend %roomy;
+}
+
+.content-wrap {
+	@extend %content-wrap;
+}
+
+.hero-wrap {
+	@extend %content-wrap;
+}
+
+%column {
+	float: left;
+	@include pie-clearfix;
+}
+
+%two-col-left {
+	@extend %column;
+	width: rem($two-col-left-width);
+}
+
+%two-col-right {
+	@extend %column;
+	width: rem($two-col-right-width);
+}
+
+%undershadow {
+	@include box-shadow(0 2px 10px 0 rgba(0, 0, 0, 0.5));
+}
+
+%heading-base {
+	color: inherit;
+	line-height: $base-line-height;
+	text-rendering: optimizelegibility;
+}
+
+%heading-one-size {
+	@include typeface-font(40, 400);
+}
+
+%heading-two-size {
+	@include typeface-font(32, 400);
+}
+
+%heading-three-size {
+	@include typeface-font(24, 400);
+}
+
+%heading-four-size {
+	@include typeface-font(18, 400);
+}
+
+%heading-five-size {
+	@include typeface-font(14, 400);
+}
+
+%heading-one {
+	@extend %heading-base;
+	@extend %heading-one-size;
+	margin-bottom: rem(20);
+	@include base-font-header(700);
+}
+
+%heading-two {
+	@extend %heading-base;
+	@extend %heading-two-size;
+	margin-bottom: rem(20);
+	@include base-font-header(700);
+}
+
+%heading-three {
+	@extend %heading-base;
+	@extend %heading-three-size;
+	margin-top: rem(10);
+	margin-bottom: rem(20);
+	@include base-font-header(700);
+}
+
+%heading-four {
+	@extend %heading-base;
+	@extend %heading-four-size;
+	margin-top: rem(10);
+	margin-bottom: rem(15);
+	@include base-font(700);
+}
+
+%heading-five {
+	@extend %heading-base;
+	@extend %heading-five-size;
+	margin-top: rem(7);
+	margin-bottom: rem(10);
+	@include base-font(700);
+}
+
+%h1 {
+	@extend %heading-one;
+}
+
+%h2 {
+	@extend %heading-two;
+}
+
+%h3 {
+	@extend %heading-three;
+}
+
+%h4 {
+	@extend %heading-four;
+}
+
+%h5 {
+	@extend %heading-five;
+}
+
+%horizontal-nav {
+	@extend %hero-wrap;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	@include pie-clearfix;
+
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		//border-bottom: 5px solid $color-med-light-grey;
+	}
+
+	& ul {
+		@extend %content-wrap-base;
+		padding: 0 12px;
+		display: block;
+		margin: 0;
+		@include pie-clearfix;
+	}
+
+	& li {
+		width: 25%;
+		float: left;
+		white-space: nowrap;
+		border-bottom: 5px solid $color-med-light-grey;
+		@media all and (max-width: 500px) {
+			float: none;
+			width: 100%;
+		}
+	}
+
+	& a {
+		@extend %heading-four-size;
+		display: block;
+		margin-bottom: 0;
+		padding: rem(30px) rem(25px);
+		color: $color-dark-grey;
+		text-align: center;
+		@media all and (max-width: 900px) {
+			font-size: $heading-five-size;
+			padding: rem(20px) rem(12px);
+		}
+		@media all and (max-width: 700px) {
+			font-size: $heading-five-size - 20%;;
+			padding: rem(20px) rem(12px);
+		}
+	}
+
+	& li:nth-child(1):hover {
+		border-color: #6700f1; //purple
+	}
+
+	& li:nth-child(2):hover {
+		border-color: #e54000; //red
+	}
+
+	& li:nth-child(3):hover {
+		border-color: #66cc00; //green
+	}
+
+	& li:nth-child(4):hover {
+		border-color: #daea00; //yellow
+	}
+
+	& li:nth-child(5):hover {
+		border-color: #eab200; //orange
+	}
+}
+
+%sidenav {
+	@extend %two-col-left;
+
+	& ul {
+		width: 100%;
+		margin: 0;
+	}
+
+	& li {
+		display: block;
+		width: 185px;
+	}
+
+	& a {
+		@extend %heading-five-size;
+		display: inline-block;
+		margin-bottom: 0;
+		padding: 0 10%;
+		color: $color-dark-grey;
+	}
+}
+
+%figure-right {
+	float: right;
+	margin-left: $padding-roomy-rem;
+
+	& > img {
+		display: block;
+	}
+}

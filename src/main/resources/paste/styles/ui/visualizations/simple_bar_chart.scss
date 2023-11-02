@@ -1,0 +1,26 @@
+/*
+@module "paste/ui/visualizations/simple_bar_chart";
+*/
+
+@import "paste/util/helpers";
+
+.simple-bar-chart {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 650px;
+    max-height: 48px;
+    & > .percentage-bar {
+        display: block;
+        position: relative;
+        background-color: black;
+        height: 100%;
+    }
+    &.complete > .percentage-bar {
+        &:after {
+            content: "";
+            background: url('/paste/images/ui/complete-overlay-640x48.png');
+            @include absolute-fill;
+        }
+    }
+}

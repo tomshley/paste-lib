@@ -1,0 +1,20 @@
+
+@import "paste/util/helpers";
+
+@mixin discrete-graph-color( $normal-color, $unselected-color, $selected-color ) {
+    .discrete-graph {
+        svg line { stroke: $normal-color; }
+        .graph {
+            @include fast-hover {
+                svg line { stroke: $unselected-color; }
+            }
+        }
+        .discrete-graph-point {
+            @include fast-hover {
+                &, & ~ .discrete-graph-point {
+                    svg line { stroke: $selected-color; }
+                }
+            }
+        }
+    }
+}

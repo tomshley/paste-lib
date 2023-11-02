@@ -1,0 +1,90 @@
+
+@import "paste/util/helpers";
+@import "paste/styleguide";
+
+@mixin shared_graph_reference_line($line-width: 2px, $line-style: dashed, $line-color: white) {
+    .reference-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        .line {
+            position: absolute;
+            left: 2px;
+            right: 2px;
+            height: 0;
+            border-bottom: $line-width $line-style $line-color;
+            margin-bottom: -1 * $line-width / 2;
+        }
+        strong {
+            position: absolute;
+            left: 3px;
+            bottom: 0;
+            @include paste-ui-trend-graph-typestyle( goal-label, move );
+        }
+
+        @media only screen and (max-width: 620px) {
+            strong { display: none; }
+        }
+    }
+}
+
+@mixin shared_graph_label_strip {
+    .label {
+        display: inline-block;
+        text-align: center;
+        @include paste-ui-shared-typestyle( graph-axis-label );
+
+        &:last-child { text-align: right; }
+        &:first-child { text-align: left; }
+    }
+}
+
+@mixin shared_graph_point_label( $padding-top-bottom ) {
+    .point-label {
+        @content;
+        position: absolute;
+        bottom: $padding-top-bottom;
+        text-align: center;
+        line-height: 1.1em;
+        strong { @include paste-ui-trend-graph-typestyle( time-period, move ); }
+        em { @include paste-ui-trend-graph-typestyle( day-range, move ); }
+        &.no-split strong { display: block; }
+        &.same-day strong {display: inline; }
+        &.split .dash:after {
+            content: "";
+            display: block;
+        }
+
+        @media only screen and (max-width: 740px) {
+            & {
+                bottom: auto;
+                top: 100%;
+                padding-top: $padding-top-bottom;
+            }
+        }
+
+        @media only screen and (max-width: 620px) {
+            & { display: none; }
+        }
+    }
+}
+
+@mixin shared_graph_y_axis( $position: relative, $offset: 40px ) {
+    position: $position;
+    &.has-y-axis { padding-right: 20px; }
+    .y-axis-label {
+        white-space: nowrap;
+        position: absolute;
+        bottom: $offset;
+        left: 100%;
+        @include transform( rotate(-90deg) );
+        // @include transform-origin( left bottom );  Fix this once we have real SASS
+        -webkit-transform-origin: left bottom;
+        -moz-transform-origin: left bottom;
+        -ms-transform-origin: left bottom;
+        -o-transform-origin: left bottom;
+        transform-origin: left bottom;
+        @include paste-ui-shared-typestyle( graph-axis-label );
+    }
+}
