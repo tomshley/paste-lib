@@ -1,0 +1,31 @@
+/*
+@module "paste/ui/form";
+*/
+
+@import "paste/styleguide";
+
+
+.form-field-input {
+    height: 38px;
+    border: 1px solid #cccccc;
+    &:not([data-validity-valid]) { background-color: #eeeeee; }
+    &[data-validity-valid=true] { background-color: rgba(#b8b8b8, 0.1); }
+    &:focus { background: #ffffff; }
+}
+
+.brand-form-field-select > .brand-select {
+    &, * { box-sizing: border-box; }
+    border: 1px solid #cccccc;
+    select {
+        height: 36px;
+        padding: 0;
+
+        &:not([data-validity-valid]) + .background { background-color: #eeeeee; }
+        &[data-validity-valid=true] + .background { background-color: rgba(#b8b8b8, 0.1); }
+        &:focus + .background { background-color: #ffffff; }
+    }
+
+    .value:before { border-left: 1px solid #cccccc; }
+
+    &, select { width: 100%; }
+}

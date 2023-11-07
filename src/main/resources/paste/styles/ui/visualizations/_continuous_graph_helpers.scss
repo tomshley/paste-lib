@@ -1,0 +1,9 @@
+
+@import "paste/util/helpers";
+
+@mixin continuous-graph-color( $normal-color ) {
+    .continuous-graph {
+        svg line { stroke: $normal-color; }
+        .display-wrapper .display-value { color: $normal-color; }
+    }
+}

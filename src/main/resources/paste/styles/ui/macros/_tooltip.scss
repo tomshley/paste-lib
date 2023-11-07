@@ -1,0 +1,281 @@
+@import "paste/util/helpers";
+@import "paste/styleguide";
+@import "components/sass-foundation";
+
+@mixin tooltip(
+    $content-height: auto,  // Must specify height for centering triangle
+    $content-width: auto,  // Must specify width for centering triangle
+    $border-color: default,
+    $border-width: 5px,
+    $icon-height: 20px,
+    $icon-width: 10px,
+    $icon-margin: 5px,
+    $triangle-width: 20px,
+    $triangle-offset: 20px,
+    $triangle-margin: 5px,
+    $icon-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAoCAMAAADJ7yrpAAAAQlBMVEUAAAC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLjtKvZFAAAAFXRSTlMApoDzDC9Z2nMDHxTI+8C15kYoOJJxhZvFAAAAsklEQVQoz6XR2xKDIAwEUEAuERCv/P+vVqerTSzTh7qPZ4DsBPVf7OzX/mZU9wR3tyNDZNZXZGPoTgwM44lZsQQgqe/7RZaKuqsTXfY8dnFJymKOPmKK3wUZL+3qJx6WyNlEwBEojgeBeDcLHN6oVWNxhqMHrhw1PqhvDNfcnOiOGGDimBvV7a9Cc+tJy3FES9WY0wksuO6OoQlIFSm61AVoJ6DoGjNIz3wlK22b8ejUygufpxTP44z24wAAAABJRU5ErkJggg==),
+    $direction: all,
+    $z-index: 5000
+){
+    @if $border-color == "default" {
+        $border-color: flyout-color();
+    }
+    $triangle-height: $triangle-width / 2;
+
+    & {
+        position: relative;
+        display: inline-block;
+    }
+
+    dt {
+        &:before {
+            content: "";
+            display: inline-block;
+            width: $icon-width;
+            height: $icon-height;
+            background: $icon-image;
+            background-size: $icon-width $icon-height;
+            margin-right: $icon-margin;
+            vertical-align: text-bottom;
+        }
+        &:empty:before { margin-right: 0; }
+    }
+
+    dd {
+        z-index: $z-index;
+        display: none;
+        position: absolute;
+        border: $border-width solid $border-color;
+        background: $border-color;
+        @include border-radius( $border-width );
+        @include box-shadow( 0 10px 10px rgba(0,0,0,0.3) );
+
+        @if $content-height != auto {
+            height: $content-height;
+        }
+        @if $content-width != auto {
+            width: $content-width;
+        }
+    }
+
+    @if $direction == down or $direction == all {
+        &.bottom-left dd { left: -1 * $triangle-offset; }
+        &.bottom-right dd { right: -1 * $triangle-offset; }
+        @if $content-width != auto {
+            &.bottom-center dd {
+                right: 50%;
+                margin-right: -1 * $content-width / 2;
+            }
+        }
+
+        &.bottom-left, &.bottom-right, &.bottom-center {
+            dd {
+                bottom: 100%;
+                margin-bottom: $triangle-height + $triangle-margin;
+            }
+            &:after {
+                content: "";
+                display: none;
+                position: absolute;
+                top: -1 * ($triangle-height + $triangle-margin);
+                @include triangle( $triangle-width, $border-color, down );
+            }
+            &:before {
+                content: "";
+                display: none;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: -1 * ($triangle-height + $triangle-margin);
+                bottom: 0;
+            }
+        }
+        &.bottom-left, &.bottom-right {
+            &:after {
+                left: ($icon-width - $triangle-width) / 2;
+            }
+        }
+        &.bottom-center {
+            &:after {
+                left: 50%;
+                margin-left: -1 * $triangle-width / 2;
+            }
+        }
+    }
+    @if $direction == up or $direction == all {
+        &.top-left dd { left: -1 * $triangle-offset; }
+        &.top-right dd { right: -1 * $triangle-offset; }
+        @if $content-width != auto {
+            &.top-center dd {
+                right: 50%;
+                margin-right: -1 * $content-width / 2;
+            }
+        }
+
+        &.top-left, &.top-right, &.top-center {
+            dd {
+                top: 100%;
+                margin-top: $triangle-height + $triangle-margin;
+            }
+            &:after {
+                content: "";
+                display: none;
+                position: absolute;
+                bottom: -1 * ($triangle-height + $triangle-margin);
+                @include triangle( $triangle-width, $border-color, up );
+            }
+            &:before {
+                content: "";
+                display: none;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -1 * ($triangle-height + $triangle-margin);
+                top: 0;
+            }
+        }
+        &.top-left, &.top-right {
+            &:after {
+                left: ($icon-width - $triangle-width) / 2;
+            }
+        }
+        &.top-center {
+            &:after {
+                left: 50%;
+                margin-left: -1 * $triangle-width / 2;
+            }
+        }
+    }
+    @if $direction == left or $direction == all {
+        &.left-top dd { top: -1 * $triangle-offset; }
+        &.left-bottom dd { bottom: -1 * $triangle-offset; }
+        @if $content-height != auto {
+            &.left-center dd {
+                top: 50%;
+                margin-top: -1 * $content-height / 2;
+            }
+        }
+
+        &.left-top, &.left-bottom, &.left-center {
+            dd {
+                right: 100%;
+                margin-right: $triangle-height + $triangle-margin;
+            }
+            &:after {
+                content: "";
+                display: none;
+                position: absolute;
+                left: -1 * ($triangle-height + $triangle-margin);
+                @include triangle( $triangle-width, $border-color, right );
+            }
+            &:before {
+                content: "";
+                display: none;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                left: -1 * ($triangle-height + $triangle-margin);
+                top: 0;
+            }
+        }
+        &.left-top, &.left-bottom {
+            &:after {
+                bottom: ($icon-height - $triangle-width) / 2;
+            }
+        }
+        &.left-center {
+            &:after {
+                bottom: 50%;
+                margin-bottom: -1 * $triangle-width / 2;
+            }
+        }
+    }
+    @if $direction == right or $direction == all {
+        &.right-top dd { top: -1 * $triangle-offset; }
+        &.right-bottom dd { bottom: -1 * $triangle-offset; }
+        @if $content-height != auto {
+            &.right-center dd {
+                top: 50%;
+                margin-top: -1 * $content-height / 2;
+            }
+        }
+
+        &.right-top, &.right-bottom, &.right-center {
+            dd {
+                left: 100%;
+                margin-left: $triangle-height + $triangle-margin;
+            }
+            &:after {
+                content: "";
+                display: none;
+                position: absolute;
+                bottom: ($icon-height - $triangle-width) / 2;
+                right: -1 * ($triangle-height + $triangle-margin);
+                @include triangle( $triangle-width, $border-color, left );
+            }
+            &:before {
+                content: "";
+                display: none;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: -1 * ($triangle-height + $triangle-margin);
+                top: 0;
+            }
+        }
+        &.right-top, &.right-bottom {
+            &:after {
+                bottom: ($icon-height - $triangle-width) / 2;
+            }
+        }
+        &.right-center {
+            &:after {
+                bottom: 50%;
+                margin-bottom: -1 * $triangle-width / 2;
+            }
+        }
+    }
+
+    &:hover {
+        @if $direction == down or $direction == all {
+            &.bottom-left, &.bottom-right {
+                dd, &:after, &:before { display: block; }
+            }
+            @if $content-width != auto {
+                &.bottom-center {
+                   dd, &:after, &:before { display: block; }
+                }
+            }
+        }
+        @if $direction == up or $direction == all {
+            &.top-left, &.top-right {
+                dd, &:after, &:before { display: block; }
+            }
+            @if $content-width != auto {
+                &.top-center {
+                   dd, &:after, &:before { display: block; }
+                }
+            }
+        }
+        @if $direction == left or $direction == all {
+            &.left-top, &.left-bottom {
+                dd, &:after, &:before { display: block; }
+            }
+            @if $content-height != auto {
+                &.left-center {
+                   dd, &:after, &:before { display: block; }
+                }
+            }
+        }
+        @if $direction == right or $direction == all {
+            &.right-top, &.right-bottom {
+                dd, &:after, &:before { display: block; }
+            }
+            @if $content-height != auto {
+                &.right-center {
+                   dd, &:after, &:before { display: block; }
+                }
+            }
+        }
+    }
+}

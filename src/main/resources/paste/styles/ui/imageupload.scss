@@ -1,0 +1,147 @@
+/*
+@module "paste/ui/imageupload";
+*/
+//noinspection CssUnknownTarget
+@import "components/sass-foundation";
+
+.form-field-image {
+	position: relative;
+	height: 160px;
+
+	& > .image-message {
+		display: block;
+		opacity: 0;
+		filter: alpha(opacity=0);
+
+		&[data-image-upload-error-message] {
+			opacity: 1;
+			filter: alpha(opacity=100);
+
+			&:before {
+				width: 200%;
+				margin-left: -50%;
+				padding: 5px;
+				clear: both;
+				float: left;
+				display: block;
+
+				content: attr(data-image-upload-error-message);
+				text-align: center;
+
+				@include box-sizing(border-box);
+				background-color: rgb(255, 217, 217);
+				background-color: rgba(255, 10, 10, 0.2);
+				border: 1px solid #e6e6e6;
+			}
+		}
+		&[data-image-upload-loading] {
+			opacity: 1;
+			filter: alpha(opacity=100);
+
+			&:after {
+				position: absolute;
+				left: 0;
+				top: 0;
+				content: " ";
+				width: 100%;
+				height: 100%;
+				background: url('/paste/images/ui/ajax-loader.gif') no-repeat center center;
+			}
+		}
+	}
+
+	& > .image-preview {
+		float: left;
+		display: inline-block;
+		height: 160px;
+		width: 160px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+
+		&[src=''] {
+			-moz-opacity: 0;
+			filter: alpha(opacity=0);
+			opacity: 0;
+		}
+
+		&:after {
+			position: absolute;
+			left: 0;
+			top: 0;
+			content: ' ';
+			width: 100px;
+			height: 100px;
+			background: red;
+		}
+	}
+
+	/*hack! */
+	&:before {
+		content: "";
+		position: absolute;
+		left: -1px;
+		top: -1px;
+		width: 160px;
+		height: 160px;
+	}
+
+	&.error {
+		&.form-field-image {
+			&:before {
+				-webkit-box-shadow: inset 1px 1px 5px 1px rgba(237, 21, 86, .3);
+				box-shadow: inset 1px 1px 5px 1px rgba(237, 21, 86, .3);
+				border: solid 1px #ED1556;
+			}
+		}
+	}
+
+	& > input[type='file'] {
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: #000;
+		opacity: 0;
+		z-index: 2;
+		width: 160px;
+		height: 160px;
+
+		&[data-image-upload-loading] {
+			display: none;
+		}
+	}
+
+	& > label {
+		float: left;
+		display: inline-block;
+		position: relative;
+		margin-left: 10px;
+		cursor: pointer;
+
+		& > .image-upload-button {
+			position: relative;
+			left: 0;
+			top: 0;
+			font-size: 70%;
+			padding: 10px;
+			z-index: 1;
+		}
+
+		& > input {
+			&[type='file'] {
+				position: absolute;
+				background: #000;
+				-moz-opacity: 0;
+				filter: alpha(opacity=0);
+				opacity: 0;
+				z-index: 2;
+				height: 100%;
+				width: 100%;
+
+				&[data-image-upload-loading] {
+					display: none;
+				}
+			}
+		}
+	}
+}

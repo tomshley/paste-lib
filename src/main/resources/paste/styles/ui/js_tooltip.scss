@@ -1,0 +1,33 @@
+/*
+@module "paste/ui/js_tooltip";
+*/
+
+@import "components/sass-foundation";
+
+body { position: relative; }
+
+.ui-js-tooltip {
+    $background-color: #444444;
+    $triangle-margin: 1px;
+    $triangle-offset: 20px;
+    $triangle-width: 20px;
+    $triangle-height: $triangle-width / 2;
+    $flyout-padding: 20px;
+
+    z-index: 5000;
+    position: absolute;
+    padding: $flyout-padding;
+    margin-right: -1 * ($triangle-offset + $triangle-width / 2);
+    margin-bottom: $triangle-width + $triangle-margin;
+    background: $background-color;
+    @include border-radius( 5px );
+
+    &:after {
+        content: "";
+        position: absolute;
+        right: $triangle-offset;
+        bottom: -1 * $flyout-padding;
+        height: 0;
+        @include triangle( $triangle-width, $background-color, down );
+    }
+}

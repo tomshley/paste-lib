@@ -1,0 +1,136 @@
+/*
+@module "paste/ui/visualizations/weekly_bar_chart";
+*/
+
+@import "paste/util/helpers";
+@import "paste/styleguide";
+
+@import "components/sass-foundation";
+
+.weekly-bar-chart {
+    $legend-width: 48px;
+    $bar-height: 25px;
+    $bar-margin: 3px;
+    $goal-average-line-thickness: 2px;
+    $legend-padding: 6px;
+    $label-padding: 3px;
+    $label-height: 15px + 15px + $legend-padding;
+    $animation-duration: 1.5s;
+    $reset-z-index: 0;
+    $flyout-z-index: 1;
+
+    padding-top: $label-height;
+
+    @include clear-fix;
+
+    &, * { @include box-sizing( border-box ); }
+
+    .chart {
+        width: 100% - $legend-width;
+        padding-left: $legend-width + $legend-padding;
+    }
+    .legend {
+        width: $legend-width;
+        text-align: right;
+        float: left;
+    }
+    .day-of-week { @include paste-ui-performance-graph-typestyle( day-of-week ); }
+    .day-of-month { @include paste-ui-performance-graph-typestyle( day-of-month ); }
+    .day-of-week, .day-of-month { line-height: $bar-height; }
+    .chart {
+        width: 100%;
+        position: relative;
+        z-index: $reset-z-index;
+        .day {
+            background: rgba(paste-ui-indifferent-color(),0.2);
+            position: relative;
+            &.no-data { background: rgba(paste-ui-indifferent-color(),0.1); }
+        }
+    }
+    .reference-wrapper { position: relative; }
+    .day {
+        height: $bar-height;
+        margin-top: $bar-margin;
+        &:first-child { margin-top: 0; }
+        &.met .daily-value:before {
+            content: "";
+            @include absolute-fill;
+            background-image: url('/paste/images/ui/diagonals.png');
+            -webkit-animation: weekly-bar-chart-animation-webkit $animation-duration linear infinite;
+            -moz-animation: weekly-bar-chart-animation-moz $animation-duration linear infinite;
+            -ms-animation: weekly-bar-chart-animation-ms $animation-duration linear infinite;
+            -o-animation: weekly-bar-chart-animation-opera $animation-duration linear infinite;
+            animation: weekly-bar-chart-animation $animation-duration linear infinite;
+        }
+        @include fast-hover {
+            .detail { display: block; }
+        }
+    }
+    &.theme-move .daily-value { background: paste-ui-move-color(); }
+    &.theme-sleep .daily-value { background: paste-ui-sleep-color(); }
+    .daily-value {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+    }
+    .detail {
+        $triangle-size: 10px;
+        $flyout-width: 124px;
+        $color: brand-color(monochromatic, shade-01);
+
+        z-index: $flyout-z-index;
+        display: none;
+        position: absolute;
+        bottom: 75%;
+        left: 50%;
+        padding: 1em 0.25em;
+        text-align: center;
+        background: $color;
+        width: $flyout-width;
+        margin-left: -1 * $flyout-width / 2;
+
+        @include border-radius(0.5em);
+        @include paste-ui-performance-graph-typestyle( detail-standalone-value );
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -1 * $triangle-size;
+            left: 50%;
+            margin-left: -1 * $triangle-size / 2;
+            @include triangle($triangle-size,$color,down);
+        }
+    }
+    .goal-line, .average-line {
+        position: absolute;
+        top: -1 * $label-height;
+        bottom: 0;
+        width: 0;
+        margin-left: -1 * $goal-average-line-thickness / 2;
+        .tag {
+            position: absolute;
+            top: 0;
+            width: 200px;
+        }
+        &.first .tag {
+            right: $goal-average-line-thickness;
+            text-align: right;
+            padding-right: $label-padding;
+        }
+        &.last .tag {
+            left: $goal-average-line-thickness;
+            text-align: left;
+            padding-left: $label-padding;
+        }
+    }
+    .tag {
+        .label {
+            min-height: 15px;
+            @include paste-ui-performance-graph-typestyle( data-label );
+        }
+        .value { @include paste-ui-performance-graph-typestyle( data-value ); }
+    }
+    .goal-line { border-right: $goal-average-line-thickness dashed trend-reference-line-color(); }
+    .average-line { border-right: $goal-average-line-thickness solid trend-reference-line-color(); }
+}

@@ -1,0 +1,109 @@
+
+@mixin box-sizing($value:'border-box') {
+    -webkit-box-sizing: $value;
+    -moz-box-sizing: $value;
+    box-sizing: $value;
+}
+
+@mixin absolute-fill {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+@mixin vertical-gradient-background($from, $to, $default) {
+    background: $default;
+    background: -moz-linear-gradient(top, $from 0%, $to 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
+    background: -webkit-linear-gradient(top, $from 0%,$to 100%);
+    background: -o-linear-gradient(top, $from 0%,$to 100%);
+    background: -ms-linear-gradient(top, $from 0%,$to 100%);
+    background: linear-gradient(to bottom, $from 0%,$to 100%);
+}
+
+@mixin fast-hover {
+    /* There should be JS to enable/disable a body pivot class, for now this will just always enable the hover */
+    &:hover { @content; }
+}
+
+@mixin clear-fix($location: after) {
+    /* Borrowed unashamedly from: http://nicolasgallagher.com/micro-clearfix-hack/ */
+
+    @if $location == after {
+        &:after {
+            content: " ";
+            clear: both;
+        }
+    }
+    @else if $location == before {
+        &:before {
+            content: " ";
+            display: table;
+        }
+    }
+    @else if $location == both {
+        &:before,
+        &:after {
+            content: " "; /* 1 */
+            display: table; /* 2 */
+        }
+        &:after {
+            clear: both;
+        }
+    }
+    @else {
+        @warn "Undefined clear-fix location (#{$location})";
+    }
+}
+
+@mixin user-select($value) {
+    -webkit-user-select: $value;
+       -moz-user-select: $value;
+        -ms-user-select: $value;
+         -o-user-select: $value;
+            user-select: $value;
+}
+
+@mixin transform($value) {
+    -webkit-transform: $value;
+       -moz-transform: $value;
+        -ms-transform: $value;
+         -o-transform: $value;
+            transform: $value;
+}
+
+@mixin transform-origin($value) {
+    -webkit-transform-origin: $value;
+       -moz-transform-origin: $value;
+        -ms-transform-origin: $value;
+         -o-transform-origin: $value;
+            transform-origin: $value;
+}
+
+@mixin transition($value) {
+    -webkit-transition: $value;
+       -moz-transition: $value;
+        -ms-transition: $value;
+         -o-transition: $value;
+            transition: $value;
+}
+
+@mixin super-res {
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), 
+        only screen and (-moz-min-device-pixel-ratio: 1.5),
+        only screen and (min-resolution: 2dppx),
+        only screen and (-ms-min-device-pixel-ratio: 1.5),
+        only screen and (-o-min-device-pixel-ratio: 1.5 / 1),
+        only screen and (min-device-pixel-ratio: 1.5)
+    {
+        @content;
+    }
+}
+
+@mixin ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

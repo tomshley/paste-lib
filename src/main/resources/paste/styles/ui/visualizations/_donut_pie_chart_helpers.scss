@@ -1,0 +1,12 @@
+
+@mixin donut-pie-chart-set-color( $color ) {
+    .donut-pie-chart {
+        .value:before, .value:after, .big-value:before, .big-value:after {
+            background-color: $color;
+        }
+    }
+}
+
+@mixin donut-pie-chart-center {
+    .donut-pie-chart .center { @content; }
+}
