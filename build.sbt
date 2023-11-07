@@ -8,6 +8,6 @@ lazy val resourcesProject = publishableProject(resourcesProjectName, Some(file("
   .settings(
     name := resourcesProjectName,
     organization := pasteLibOrgName,
-    Test / unmanagedResourceDirectories += baseDirectory.value / "src" / "main" / "resources",
-    Compile / unmanagedResourceDirectories += baseDirectory.value / "src" / "main" / "resources"
+    Test / unmanagedResourceDirectories += baseDirectory.value / "src",
+    Compile / unmanagedResourceDirectories += baseDirectory.value / "src"
   )
