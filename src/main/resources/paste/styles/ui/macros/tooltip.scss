@@ -1,0 +1,7 @@
+/*
+@module "paste/ui/macros/tooltip";
+*/
+
+@import "paste/ui/macros/tooltip";
+
+dl.generic-tooltip { @include tooltip(); }

@@ -1,0 +1,111 @@
+/*
+@module "paste/ui/visualizations/linear_heatmap_with_circles";
+*/
+
+@import "paste/util/helpers";
+@import "paste/styleguide";
+
+@import "components/sass-foundation";
+
+.linear-heatmap-with-circles {
+    $height: 40px;
+    $size-high: 21px;
+    $size-medium-high: 17px;
+    $size-medium-low: 13px;
+    $size-low: 9px;
+    $size-zero: 5px;
+    $legend-padding: 6px;
+
+    .heatmap {
+        height: $height;
+        @include vertical-gradient-background(rgba(paste-ui-indifferent-color(),0.3),rgba(paste-ui-indifferent-color(),0.25),rgba(paste-ui-indifferent-color(),0.3));
+        @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.3));
+    }
+    .labels {
+        padding-top: $legend-padding;
+        @include paste-ui-shared-typestyle( graph-axis-label );
+        @include clear-fix;
+
+        .min { float: left; }
+        .max { float: right; }
+        .mid { text-align: center; }
+    }
+    .point {
+        position: relative;
+        display: inline-block;
+        height: $height;
+
+        @include fast-hover {
+            .details { display: block; }
+        }
+
+        &:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            background: paste-ui-indifferent-color();
+            @include border-radius( 50% );
+        }
+        &.high:before {
+            height: $size-high;
+            width: $size-high;
+            margin-top: -1 * $size-high / 2;
+            margin-right: -1 * $size-high / 2;
+        }
+        &.medium-high:before {
+            height: $size-medium-high;
+            width: $size-medium-high;
+            margin-top: -1 * $size-medium-high / 2;
+            margin-right: -1 * $size-medium-high / 2;
+        }
+        &.medium-low:before {
+            height: $size-medium-low;
+            width: $size-medium-low;
+            margin-top: -1 * $size-medium-low / 2;
+            margin-right: -1 * $size-medium-low / 2;
+        }
+        &.low:before {
+            height: $size-low;
+            width: $size-low;
+            margin-top: -1 * $size-low / 2;
+            margin-right: -1 * $size-low / 2;
+        }
+        &.zero:before {
+            height: $size-zero;
+            width: $size-zero;
+            margin-top: -1 * $size-zero / 2;
+            margin-right: -1 * $size-zero / 2;
+        }
+    }
+    .details {
+        $triangle-size: 10px;
+        $flyout-width: 160px;
+        $color: brand-color(monochromatic, shade-01);
+
+        display: none;
+        position: absolute;
+        bottom: 90%;
+        left: 50%;
+        padding: 0.75em 0;
+        text-align: center;
+        background: $color;
+        width: $flyout-width;
+        margin-left: -1 * $flyout-width / 2;
+
+        @include border-radius(0.5em);
+
+        strong, em { display: block; }
+        strong { @include paste-ui-performance-graph-typestyle( detail-label ); }
+        em { @include paste-ui-performance-graph-typestyle( detail-value ); }
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -1 * $triangle-size;
+            left: 50%;
+            margin-left: -1 * $triangle-size / 2;
+            @include triangle($triangle-size,$color,down);
+        }
+    }
+}

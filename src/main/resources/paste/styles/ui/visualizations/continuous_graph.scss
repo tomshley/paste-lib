@@ -1,0 +1,149 @@
+/*
+@module "paste/ui/visualizations/continuous_graph";
+*/
+
+@import "paste/util/helpers";
+@import "paste/styleguide";
+
+@import "components/sass-foundation";
+@import "paste/ui/visualizations/shared_graph_helpers";
+
+.continuous-graph {
+    $padding-top-bottom: 5px;
+    $flyout-width: 124px;
+    $flyout-offset: 20px;
+    $reset-z-index: 0;
+    $flyout-z-index: 1;
+    $display-value-offset: 7px;
+    $pivot-display-value-offset: -17px;
+
+    &, * { @include box-sizing( border-box ); }
+
+    .graph {
+        width: 100%;
+        height: 0;
+        position: relative;
+        z-index: $reset-z-index;
+        ul.backgrounds, ul.points { @include absolute-fill; }
+    }
+    ul.points { white-space: nowrap; }
+    .backgrounds > li {
+        display: inline-block;
+        height: 100%;
+        position: relative;
+        &:after {
+            content: "";
+            background: rgba(paste-ui-indifferent-color(),0.2);
+            @include absolute-fill;
+        }
+    }
+    .continuous-graph-point {
+        display: inline-block;
+        height: 100%;
+        position: relative;
+    }
+    svg {
+        width: 200%;
+        &.last { width: 100%; }
+        line { stroke-linecap: round; }
+        .line { stroke-width: 4px; }
+        .circle { stroke-width: 12px; }
+    }
+    .details-wrapper {
+        display: none;
+        position: absolute;
+        width: $flyout-width;
+        margin-left: -1 * $flyout-width / 2;
+        &:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: -1 * $flyout-offset;
+            bottom: 0;
+            background: brand-color(monochromatic, shade-01);
+            width: 1px;
+        }
+    }
+    .flyout-line {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        background: brand-color(monochromatic, shade-01);
+        width: 1px;
+        z-index: $flyout-z-index;
+    }
+    .continuous-graph-point{
+        @include fast-hover { .flyout-line, .details-wrapper { display: block; } }
+        .display-year {
+          position: absolute;
+          height: 100%;
+          left: 50%;
+          border-left: 1px solid brand-color(monochromatic, shade-03);
+          z-index: -1;
+          & > span {
+            position: absolute;
+            bottom: 0%;
+            left: -1px;
+            padding-left: 4px;
+            border-left: 1px solid brand-color(monochromatic, shade-03);
+          }
+        }
+    }
+    .details {
+        $triangle-size: 10px;
+        $color: brand-color(monochromatic, shade-01);
+
+        padding: 0.75em 0.25em;
+        text-align: center;
+        background: $color;
+        position: relative;
+        bottom: $flyout-offset;
+        z-index: $flyout-z-index;
+        white-space: normal;
+
+        @include border-radius(0.5em);
+
+        .range { @include paste-ui-performance-graph-typestyle( detail-label ); }
+        .display-value { @include paste-ui-performance-graph-typestyle( detail-value ); }
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -1 * $triangle-size;
+            left: 50%;
+            margin-left: -1 * $triangle-size / 2;
+            @include triangle($triangle-size,$color,down);
+        }
+    }
+    .display-wrapper {
+        $width: 50px;
+        position: absolute;
+        width: $width;
+        margin-left: -1 * $width / 2;
+        .display-value {
+            text-align: center;
+            position: relative;
+            bottom: $display-value-offset;
+            @include paste-ui-trend-graph-typestyle( data-value, move );
+        }
+        .pivot-label {
+            bottom: $pivot-display-value-offset;
+        }
+    }
+
+    @include shared_graph_y_axis;
+    @include shared_graph_reference_line($line-color:trend-reference-line-color());
+    @include shared_graph_label_strip;
+    @include shared_graph_point_label( $padding-top-bottom ) {
+        &.first {
+            left: 0;
+        }
+        &.middle {
+            left: 0;
+            right: 0;
+        }
+        &.last {
+            right: 0;
+        }
+    }
+}

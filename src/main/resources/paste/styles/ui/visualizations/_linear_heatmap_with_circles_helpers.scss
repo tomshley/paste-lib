@@ -1,0 +1,4 @@
+
+@mixin style-value-of-type( $type ) {
+    .linear-heatmap-with-circles .point.theme-#{$type}:before { @content; }
+}

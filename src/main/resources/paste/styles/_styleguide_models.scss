@@ -1,0 +1,167 @@
+@import "components/typography";
+
+@function brand-color($base, $shade: shade-00) {
+    @if $base == monochromatic {
+        @if $shade == shade-00 { @return #363636; }
+        @else if $shade == shade-01 { @return #444444; }
+        @else if $shade == shade-02 { @return #919191; }
+        @else if $shade == shade-03 { @return #b4b4b4; }
+        @else if $shade == shade-04 { @return #ffffff; }
+        @else if $shade == shade-05 { @return #000000; }
+        @else if $shade == shade-06 { @return #666666; }
+        @else if $shade == shade-07 { @return #8f8f8f; }
+        @else if $shade == shade-08 { @return #b8b8b8; }
+        @else {
+            $message: "Undefined shade for #{$base} (#{$shade})";
+            @warn( $message );
+            @debug( $message );
+        }
+    }
+    @else if $base == blue {
+        @if $shade == shade-00 { @return #0099cc; }
+        @else {
+            $message: "Undefined shade for #{$base} (#{$shade})";
+            @warn( $message );
+            @debug( $message );
+        }
+    }
+    @else if $base == orange {
+        @if $shade == shade-00 { @return #ff5113; }
+        @else if $shade == shade-01 { @return #e32e02; }
+        @else {
+            $message: "Undefined shade for #{$base} (#{$shade})";
+            @warn( $message );
+            @debug( $message );
+        }
+    }
+    @else if $base == purple {
+        @if $shade == shade-00 { @return #671eec; }
+        @else if $shade == shade-01 { @return #450eab; }
+        @else {
+            $message: "Undefined shade for #{$base} (#{$shade})";
+            @warn( $message );
+            @debug( $message );
+        }
+    }
+    @else if $base == red {
+        @if $shade == shade-00 { @return #ffd9d9; }
+        @else if $shade == shade-01 { @return #ff5314; }
+        @else if $shade == shade-02 { @return #ff0702; }
+        @else if $shade == shade-03 { @return #e33e02; }
+        @else {
+            $message: "Undefined shade for #{$base} (#{$shade})";
+            @warn( $message );
+            @debug( $message );
+        }
+    }
+
+    $message: "Undefined base color (#{$base})";
+    @warn( $message );
+    @debug( $message );
+}
+
+@function brand-color-by-number($number) {
+    @if $number == 1 {
+        @return #000000;
+    }
+    @else if $number == 2 {
+        @return #444444;
+    }
+    @else if $number == 3 {
+        @return #666666;
+    }
+    @else if $number == 4 {
+        @return #8F8F8F;
+    }
+    @else if $number == 5 {
+        @return #B8B8B8;
+    }
+    @else if $number == 6 {
+        @return #FFFFFF;
+    }
+    @else if $number == 7 {
+        @return #FF5314;
+    }
+    @else if $number == 8 {
+        @return #E33E02;
+    }
+    @else if $number == 9 {
+        @return #671FED;
+    }
+    @else if $number == 10 {
+        @return #450EAB;
+    }
+    @else if $number == 11 {
+        @return #FFD9D9;
+    }
+    @else if $number == 12 {
+        @return #FF0702;
+    }
+    @else if $number == 13 {
+        @return #0099CC;
+    }
+    @else {
+        $message: "Undefined brand color (#{$number})";
+        @warn( $message );
+        @debug( $message );
+    }
+}
+
+@mixin typeface-font-by-letter($letter, $line-height: "") {
+    @if $letter == A or $letter == a {
+        @include typeface-font(60, semi-bold, $line-height);
+    }
+    @else if $letter == B or $letter == b {
+        @include typeface-font(50, semi-bold, $line-height);
+    }
+    @else if $letter == C or $letter == c {
+        @include typeface-font(32, semi-bold, $line-height);
+    }
+    @else if $letter == D or $letter == d {
+        @include typeface-font(24, semi-bold, $line-height);
+    }
+    @else if $letter == E or $letter == e {
+        @include typeface-font(20, bold, $line-height);
+    }
+    @else if $letter == F or $letter == f {
+        @include typeface-font(20, semi-bold, $line-height);
+    }
+    @else if $letter == G or $letter == g {
+        @include typeface-font(20, normal, $line-height);
+    }
+    @else if $letter == H or $letter == h {
+        @include typeface-font(16, bold, $line-height);
+    }
+    @else if $letter == I or $letter == i {
+        @include typeface-font(16, normal, $line-height);
+    }
+    @else if $letter == J or $letter == j {
+        @include typeface-font(14, bold, $line-height);
+    }
+    @else if $letter == K or $letter == k {
+        @include typeface-font(14, semi-bold, $line-height);
+    }
+    @else if $letter == L or $letter == l {
+        @include typeface-font(14, normal, $line-height);
+    }
+    @else if $letter == M or $letter == m {
+        @include typeface-font(12, bold, $line-height);
+    }
+    @else if $letter == N or $letter == n {
+        @include typeface-font(12, normal, $line-height);
+    }
+    @else if $letter == O or $letter == o {
+        @include typeface-font(42, semi-bold, $line-height);
+    }
+    @else if $letter == P or $letter == p {
+        @include typeface-font(24, normal, $line-height);
+    }
+    @else if $letter == Q or $letter == q {
+        @include typeface-font(12, semi-bold, $line-height);
+    }
+    @else {
+        $message: "Undefined brand typeface (#{$letter})";
+        @warn( $message );
+        @debug( $message );
+    }
+}

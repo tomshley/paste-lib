@@ -1,0 +1,123 @@
+/*
+@module "paste/ui/visualizations/discrete_graph";
+*/
+
+@import "paste/util/helpers";
+@import "paste/styleguide";
+
+@import "components/sass-foundation";
+@import "paste/ui/visualizations/shared_graph_helpers";
+
+.discrete-graph {
+    $padding-top-bottom: 5px;
+    $flyout-width: 124px;
+    $flyout-offset: 20px;
+    $reset-z-index: 0;
+    $flyout-z-index: 1;
+
+    &, * { @include box-sizing( border-box ); }
+
+    .graph {
+        width: 100%;
+        height: 0;
+        position: relative;
+        z-index: $reset-z-index;
+        ul.backgrounds, ul.points { @include absolute-fill; }
+    }
+    .background {
+        display: inline-block;
+        height: 100%;
+        position: relative;
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 1px;
+            right: 1px;
+            background: rgba(paste-ui-indifferent-color(),0.2);
+        }
+        &.no-data:after {
+            background: rgba(paste-ui-indifferent-color(),0.05);
+        }
+        &:first-child:after { left: 0; }
+        &:last-child:after { right: 0; }
+    }
+    .discrete-graph-point {
+        display: inline-block;
+        height: 100%;
+        position: relative;
+    }
+    svg {
+        width: 200%;
+        &.last { width: 100%; }
+        line { stroke-linecap: round; }
+        .line { stroke-width: 4px; }
+        .circle { stroke-width: 12px; }
+    }
+    .details-wrapper {
+        display: none;
+        position: absolute;
+        left: 50%;
+        width: $flyout-width;
+        margin-left: -1 * $flyout-width / 2;
+    }
+    .discrete-graph-point{
+        @include fast-hover { .details-wrapper { display: block; } }
+        .display-year {
+          position: absolute;
+          height: 100%;
+          padding-left: 4px;
+          border-left: 1px solid brand-color(monochromatic, shade-03);
+          z-index: -1;
+          left: 1px;
+          & > span {
+            position: absolute;
+            bottom: 100%;
+            left: -1px;
+            padding-left: 4px;
+            border-left: 1px solid brand-color(monochromatic, shade-03);
+            @media only screen and (max-width: 740px) {
+                bottom: 0%;
+            }
+            @media only screen and (max-width: 620px) {
+                bottom: auto;
+                top: 100%;
+            }
+          }
+        }
+    }
+    .details {
+        $triangle-size: 10px;
+        $color: brand-color(monochromatic, shade-01);
+
+        padding: 0.75em 0.25em;
+        text-align: center;
+        background: $color;
+        position: relative;
+        bottom: $flyout-offset;
+        z-index: $flyout-z-index;
+
+        @include border-radius(0.5em);
+
+        .range { @include paste-ui-performance-graph-typestyle( detail-label ); }
+        .display-value { @include paste-ui-performance-graph-typestyle( detail-value ); }
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: -1 * $triangle-size;
+            left: 50%;
+            margin-left: -1 * $triangle-size / 2;
+            @include triangle($triangle-size,$color,down);
+        }
+    }
+
+    @include shared_graph_y_axis;
+    @include shared_graph_reference_line($line-color:trend-reference-line-color());
+    @include shared_graph_label_strip;
+    @include shared_graph_point_label( $padding-top-bottom ) {
+        left: 0;
+        right: 0;
+    }
+}
